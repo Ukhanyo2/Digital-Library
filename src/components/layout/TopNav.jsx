@@ -24,6 +24,9 @@ export const TopNav = () => {
           {/* Navigation Links */}
           <div className="hidden md:flex space-x-8">
             <a href="/" className="text-gray-700 hover:text-blue-600 transition">
+              Home
+            </a>
+            <a href="/about" className="text-gray-700 hover:text-blue-600 transition">
               About
             </a>
             <a href="/library" className="text-gray-700 hover:text-blue-600 transition">
@@ -31,6 +34,9 @@ export const TopNav = () => {
             </a>
             <a href="/games" className="text-gray-700 hover:text-blue-600 transition">
               Games
+            </a>
+            <a href="/creatives" className="text-gray-700 hover:text-blue-600 transition">
+             Creatives
             </a>
             <a href="/events" className="text-gray-700 hover:text-blue-600 transition">
               Events
