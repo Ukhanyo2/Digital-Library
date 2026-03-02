@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useUserAccess } from '@/hooks/useUserAccess'
 import { RedemptionForm } from './RedemptionForm'
-import { Download, Lock } from 'lucide-react'
+import { Download, Lock, ChevronRight } from 'lucide-react'
 
 export const BookCard = ({ book, isCoded }) => {
   const { user } = useAuth()
@@ -46,8 +46,6 @@ export const BookCard = ({ book, isCoded }) => {
   const initiateDownload = async () => {
     setIsDownloading(true)
     try {
-      // In a real app, call your backend to generate a signed download URL
-      // For now, we'll just use the pdf_url directly
       if (book.pdf_url) {
         window.open(book.pdf_url, '_blank')
       } else {
@@ -64,74 +62,93 @@ export const BookCard = ({ book, isCoded }) => {
   const handleRedemptionSuccess = () => {
     setShowRedemption(false)
     setHasAccess(true)
-    // Auto-download after successful redemption
     initiateDownload()
   }
 
+  // Extract year from description or use placeholder
+  const year = book.year || new Date().getFullYear()
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
-      {/* Cover Image */}
-      <div className="h-40 bg-gray-200 overflow-hidden relative">
+    <div className="group flex flex-col h-full">
+      {/* Book Cover Container */}
+      <div className="relative mb-6 overflow-hidden bg-gray-900 aspect-[9/12] border border-gray-800 group-hover:border-white transition duration-300">
         {book.cover_url ? (
           <img
             src={book.cover_url}
             alt={book.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-sm">
-            📚 No Cover
+          <div className="w-full h-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center text-gray-500 font-serif">
+            <span className="text-center text-sm">No Cover Available</span>
           </div>
         )}
+
+        {/* Lock Badge for Premium Books */}
         {isCoded && !hasAccess && (
-          <div className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded">
-            <Lock size={16} />
+          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur text-yellow-400 p-2 rounded-full border border-yellow-400">
+            <Lock size={18} />
+          </div>
+        )}
+
+        {/* Premium Badge */}
+        {isCoded && hasAccess && (
+          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-serif tracking-widest uppercase border border-white">
+            Unlocked
           </div>
         )}
       </div>
 
-      {/* Content */}
-      <div className="p-4 flex-1 flex flex-col">
-        <h3 className="font-bold text-lg truncate">{book.title}</h3>
-        <p className="text-sm text-gray-600 mb-2 truncate">{book.author}</p>
-        <p className="text-xs text-gray-500 mb-3 line-clamp-2">{book.description || 'No description'}</p>
+      {/* Book Metadata - Luxury Lookbook Style */}
+      <div className="flex-1 flex flex-col">
+        <h3 className="font-serif text-lg text-white mb-2 group-hover:text-yellow-400 transition duration-300 line-clamp-2">
+          {book.title}
+        </h3>
 
-        {/* File Size */}
-        <p className="text-xs text-gray-500 mb-3">
-          📦 {book.file_size_mb || '?'} MB
+        {/* Minimalist Author & Year Tag */}
+        <p className="text-xs text-gray-400 font-light tracking-widest uppercase mb-4">
+          BY {book.author || 'UNKNOWN AUTHOR'} | {year}
         </p>
 
-        {/* Badge */}
-        <div className="mb-3">
-          {isCoded ? (
-            <span className="inline-block px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded font-medium">
-              🔐 Premium
-            </span>
-          ) : (
-            <span className="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
-              ✓ Free
-            </span>
-          )}
-        </div>
+        {/* Description */}
+        {book.description && (
+          <p className="text-xs text-gray-500 font-light leading-relaxed mb-4 line-clamp-2">
+            {book.description}
+          </p>
+        )}
 
-        {/* Redemption Form (if showing) */}
+        {/* File Size */}
+        {book.file_size_mb && (
+          <p className="text-xs text-gray-600 font-light mb-6">
+            {book.file_size_mb} MB
+          </p>
+        )}
+
+        {/* Redemption Form */}
         {showRedemption && (
-          <RedemptionForm
-            bookId={book.id}
-            onSuccess={handleRedemptionSuccess}
-            onCancel={() => setShowRedemption(false)}
-          />
+          <div className="mb-6 p-4 border border-yellow-400 bg-black/50 rounded">
+            <RedemptionForm
+              bookId={book.id}
+              onSuccess={handleRedemptionSuccess}
+              onCancel={() => setShowRedemption(false)}
+            />
+          </div>
         )}
 
         {/* Download Button */}
         <button
           onClick={handleDownload}
           disabled={isDownloading || checking}
-          className="mt-auto w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 transition font-medium flex items-center justify-center gap-2"
+          className="mt-auto w-full py-3 border border-white text-white hover:bg-white hover:text-black transition duration-300 font-serif font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Download size={16} />
-          {isDownloading ? 'Downloading...' : isCoded ? (hasAccess ? 'Download' : 'Unlock & Download') : 'Download'}
+          {isDownloading 
+            ? 'Downloading...' 
+            : isCoded 
+              ? (hasAccess ? 'Download' : checking ? 'Checking...' : 'Unlock') 
+              : 'Download'}
+          <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition duration-300" />
         </button>
       </div>
     </div>

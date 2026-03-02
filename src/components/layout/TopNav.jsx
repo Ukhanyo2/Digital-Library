@@ -11,68 +11,100 @@ export const TopNav = () => {
   }
 
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo/Brand */}
-          <div className="flex-shrink-0">
-            <a href="/" className="text-2xl font-bold text-blue-600">
-              📚 Library
-            </a>
-          </div>
+    <>
+      {/* Announcement Banner */}
+      <div className="bg-black border-b border-gray-800 py-2 px-4 text-center">
+        <p className="text-xs md:text-sm text-gray-300 tracking-widest uppercase font-light">
+          Digital Library | Premium Collection | Worldwide Access
+        </p>
+      </div>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex space-x-8">
-            <a href="/" className="text-gray-700 hover:text-blue-600 transition">
-              About
-            </a>
-            <a href="/library" className="text-gray-700 hover:text-blue-600 transition">
-              Library
-            </a>
-            <a href="/games" className="text-gray-700 hover:text-blue-600 transition">
-              Games
-            </a>
-            <a href="/events" className="text-gray-700 hover:text-blue-600 transition">
-              Events
-            </a>
-            <a href="/contacts" className="text-gray-700 hover:text-blue-600 transition">
-              Contacts
-            </a>
-          </div>
+      {/* Main Navigation */}
+      <nav className="bg-black border-b border-gray-800 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo/Brand */}
+            <div className="flex-shrink-0">
+              <a href="/" className="text-2xl font-serif font-bold text-white hover:text-yellow-400 transition duration-300">
+                Library
+              </a>
+            </div>
 
-          {/* User Menu */}
-          <div className="flex items-center space-x-4">
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-700">
-                  Welcome, <span className="font-semibold">{user.email}</span>
-                </span>
-                <button
-                  onClick={handleLogout}
-                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition font-medium"
-                >
-                  Logout
-                </button>
+            {/* Navigation Links - Centered */}
+            <div className="hidden lg:flex space-x-12 absolute left-1/2 transform -translate-x-1/2">
+              <a 
+                href="/" 
+                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
+              >
+                About
+              </a>
+              <a 
+                href="/library" 
+                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
+              >
+                Library
+              </a>
+              <a 
+                href="/games" 
+                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
+              >
+                Games
+              </a>
+              <a 
+                href="/events" 
+                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
+              >
+                Events
+              </a>
+              <a 
+                href="/contacts" 
+                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
+              >
+                Contacts
+              </a>
+            </div>
+
+            {/* User Menu */}
+            <div className="flex items-center space-x-6">
+              {user ? (
+                <div className="flex items-center space-x-6">
+                  <span className="text-xs text-gray-300 font-light tracking-wide hidden sm:inline">
+                    <span className="text-yellow-400 font-semibold">{user.email}</span>
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 py-2 text-white border border-white font-light tracking-widest uppercase text-xs hover:bg-white hover:text-black transition duration-300"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-4">
+                  <a
+                    href="/login"
+                    className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
+                  >
+                    Sign In
+                  </a>
+                  <a
+                    href="/register"
+                    className="px-6 py-2 border border-white text-white font-light tracking-widest uppercase text-xs hover:bg-white hover:text-black transition duration-300"
+                  >
+                    Register
+                  </a>
+                </div>
+              )}
+
+              {/* Location Tag */}
+              <div className="text-right border-l border-gray-700 pl-4">
+                <p className="text-xs text-gray-400 font-light tracking-widest uppercase">
+                  Global
+                </p>
               </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <a
-                  href="/login"
-                  className="px-4 py-2 text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition font-medium"
-                >
-                  Sign In
-                </a>
-                <a
-                  href="/register"
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium"
-                >
-                  Register
-                </a>
-              </div>
-            )}
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   )
 }

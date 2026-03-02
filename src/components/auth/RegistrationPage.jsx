@@ -75,80 +75,89 @@ export const RegistrationPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold mb-2">Create Account</h1>
-        <p className="text-gray-600 mb-6">Register to access the digital library</p>
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      {/* Background accent */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-yellow-400 rounded-full blur-3xl"></div>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="relative bg-gray-950 border border-gray-800 rounded-none p-12 w-full max-w-md shadow-2xl">
+        <h1 className="font-serif text-4xl font-bold mb-2 text-white">Create Account</h1>
+        <p className="text-gray-400 mb-8 font-light tracking-wide">Register for exclusive access</p>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-1">Full Name</label>
+            <label className="block text-xs font-light tracking-widest uppercase text-gray-300 mb-3">Full Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               placeholder="John Doe"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
+            <label className="block text-xs font-light tracking-widest uppercase text-gray-300 mb-3">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               placeholder="you@example.com"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Password</label>
+            <label className="block text-xs font-light tracking-widest uppercase text-gray-300 mb-3">Password</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Confirm Password</label>
+            <label className="block text-xs font-light tracking-widest uppercase text-gray-300 mb-3">Confirm Password</label>
             <input
               type="password"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-black border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"
               required
             />
           </div>
 
-          {error && <p className="text-red-600 text-sm bg-red-50 p-3 rounded">{error}</p>}
+          {error && (
+            <p className="text-red-400 text-sm bg-red-950 border border-red-800 p-4 rounded">
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 transition font-medium"
+            className="w-full py-3 bg-white text-black font-serif font-semibold text-lg hover:bg-gray-200 disabled:bg-gray-600 transition duration-300 tracking-wide uppercase"
           >
             {loading ? 'Creating account...' : 'Register'}
           </button>
         </form>
 
-        <p className="text-sm text-gray-600 mt-6 text-center">
+        <p className="text-sm text-gray-400 mt-8 text-center font-light">
           Already have an account?{' '}
           <a
             href={`/login?redirect=${encodeURIComponent(redirectPath)}`}
-            className="text-blue-500 hover:underline font-medium"
+            className="text-yellow-400 hover:text-yellow-300 font-semibold transition"
           >
             Sign in
           </a>
