@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { useRedemption } from '@/hooks/useRedemption'
 
 export const RedemptionForm = ({ bookId, onSuccess, onCancel }) => {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const { redeemCode } = useRedemption()
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
@@ -12,6 +14,14 @@ export const RedemptionForm = ({ bookId, onSuccess, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+
+    // Check if user is authenticated
+    if (!user) {
+      // Redirect to login with return path
+      navigate(`/register?redirect=${encodeURIComponent(window.location.pathname)}`, { replace: false })
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -33,6 +43,9 @@ export const RedemptionForm = ({ bookId, onSuccess, onCancel }) => {
   return (
     <form onSubmit={handleSubmit} className="bg-yellow-50 p-4 rounded-lg mb-4 border border-yellow-200">
       <label className="block text-sm font-medium mb-2">Enter Receipt Code</label>
+      {!user && (
+        <p className="text-sm text-blue-600 mb-3">You'll need to log in to redeem this code.</p>
+      )}
       <input
         type="text"
         value={code}
