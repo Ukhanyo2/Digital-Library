@@ -30,39 +30,24 @@ export const TopNav = () => {
               </a>
             </div>
 
-            {/* Navigation Links - Centered */}
-            <div className="hidden lg:flex space-x-12 absolute left-1/2 transform -translate-x-1/2">
-              <a 
-                href="/" 
-                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
-              >
-                About
-              </a>
-              <a 
-                href="/library" 
-                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
-              >
-                Library
-              </a>
-              <a 
-                href="/games" 
-                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
-              >
-                Games
-              </a>
-              <a 
-                href="/events" 
-                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
-              >
-                Events
-              </a>
-              <a 
-                href="/contacts" 
-                className="text-white font-light tracking-widest uppercase text-xs hover:text-yellow-400 transition duration-300"
-              >
-                Contacts
-              </a>
-            </div>
+          {/* Navigation Links */}
+          <div className="hidden md:flex space-x-8">
+            <a href="/" className="text-gray-700 hover:text-blue-600 transition">
+              About
+            </a>
+            <a href="/library" className="text-gray-700 hover:text-blue-600 transition">
+              Library
+            </a>
+            <a href="/games" className="text-gray-700 hover:text-blue-600 transition">
+              Games
+            </a>
+            <a href="/events" className="text-gray-700 hover:text-blue-600 transition">
+              Events
+            </a>
+            <a href="/contacts" className="text-gray-700 hover:text-blue-600 transition">
+              Contacts
+            </a>
+          </div>
 
             {/* User Menu */}
             <div className="flex items-center space-x-6">
