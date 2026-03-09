@@ -1,0 +1,509 @@
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Badge } from "../../ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
+import { 
+  Users, 
+  BookOpen, 
+  Gamepad2, 
+  Calendar, 
+  Palette, 
+  TrendingUp, 
+  Download,
+  Eye,
+  Edit,
+  Trash2,
+  Search,
+  Plus,
+  BarChart3,
+  CheckCircle,
+  XCircle,
+  Clock
+} from "lucide-react";
+
+export function AdminDashboard() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Mock data for statistics
+  const stats = [
+    { title: "Total Users", value: "12,543", change: "+12.5%", icon: Users, color: "bg-blue-500" },
+    { title: "Books", value: "1,248", change: "+8.2%", icon: BookOpen, color: "bg-orange-500" },
+    { title: "Games", value: "156", change: "+15.3%", icon: Gamepad2, color: "bg-pink-500" },
+    { title: "Active Events", value: "24", change: "+4.1%", icon: Calendar, color: "bg-yellow-500" },
+    { title: "Creatives", value: "3,421", change: "+22.7%", icon: Palette, color: "bg-green-500" },
+    { title: "Downloads", value: "45,892", change: "+18.9%", icon: Download, color: "bg-purple-500" },
+  ];
+
+  // Mock data for recent users
+  const recentUsers = [
+    { id: 1, name: "John Smith", email: "john@example.com", type: "Book Club", status: "Active", date: "2026-02-28" },
+    { id: 2, name: "Sarah Johnson", email: "sarah@example.com", type: "Author", status: "Active", date: "2026-02-27" },
+    { id: 3, name: "Mike Davis", email: "mike@example.com", type: "Creative", status: "Pending", date: "2026-02-26" },
+    { id: 4, name: "Emily Brown", email: "emily@example.com", type: "Book Club", status: "Active", date: "2026-02-25" },
+    { id: 5, name: "David Wilson", email: "david@example.com", type: "Author", status: "Inactive", date: "2026-02-24" },
+  ];
+
+  // Mock data for recent books
+  const recentBooks = [
+    { id: 1, title: "The Art of Storytelling", author: "Jane Smith", category: "Writing", downloads: 1245, status: "Published" },
+    { id: 2, title: "Digital Design Fundamentals", author: "Mike Johnson", category: "Design", downloads: 892, status: "Published" },
+    { id: 3, title: "Animation Principles", author: "Sarah Lee", category: "Animation", downloads: 654, status: "Published" },
+    { id: 4, title: "Advanced Creative Techniques", author: "Tom Brown", category: "Premium", downloads: 423, status: "Draft" },
+  ];
+
+  // Mock data for pending approvals
+  const pendingApprovals = [
+    { id: 1, type: "Book Submission", title: "New Fiction Novel", author: "Alex Chen", date: "2026-03-01" },
+    { id: 2, type: "Creative Registration", title: "Portfolio Review", author: "Emma Davis", date: "2026-02-28" },
+    { id: 3, type: "Event Proposal", title: "Writing Workshop 2026", author: "James Wilson", date: "2026-02-27" },
+    { id: 4, type: "Game Submission", title: "Puzzle Quest Pro", author: "Lisa Anderson", date: "2026-02-26" },
+  ];
+
+  return (
+    <div className="max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="mb-2">Admin Dashboard</h1>
+        <p className="text-gray-600">Manage your digital library platform</p>
+      </div>
+
+      {/* Statistics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {stats.map((stat, index) => (
+          <Card key={index} className="hover:shadow-lg transition-shadow">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className={`${stat.color} p-3 rounded-lg`}>
+                  <stat.icon className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-sm text-green-600 font-semibold">{stat.change}</span>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 mb-1">{stat.title}</p>
+                <p className="text-2xl font-bold">{stat.value}</p>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Main Content Tabs */}
+      <Tabs defaultValue="overview" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="users">Users</TabsTrigger>
+          <TabsTrigger value="books">Books</TabsTrigger>
+          <TabsTrigger value="games">Games</TabsTrigger>
+          <TabsTrigger value="events">Events</TabsTrigger>
+          <TabsTrigger value="approvals">Approvals</TabsTrigger>
+        </TabsList>
+
+        {/* Overview Tab */}
+        <TabsContent value="overview" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Recent Activity */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5" />
+                  Recent Activity
+                </CardTitle>
+                <CardDescription>Latest platform activities</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3 pb-3 border-b">
+                    <div className="bg-blue-100 p-2 rounded">
+                      <Users className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">New user registration</p>
+                      <p className="text-xs text-gray-500">John Smith joined Book Club</p>
+                      <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 pb-3 border-b">
+                    <div className="bg-orange-100 p-2 rounded">
+                      <BookOpen className="w-4 h-4 text-orange-600" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">New book published</p>
+                      <p className="text-xs text-gray-500">"The Art of Storytelling" by Jane Smith</p>
+                      <p className="text-xs text-gray-400 mt-1">5 hours ago</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 pb-3 border-b">
+                    <div className="bg-green-100 p-2 rounded">
+                      <Palette className="w-4 h-4 text-green-600" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">Creative approved</p>
+                      <p className="text-xs text-gray-500">Portfolio accepted for Emma Davis</p>
+                      <p className="text-xs text-gray-400 mt-1">1 day ago</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="bg-yellow-100 p-2 rounded">
+                      <Calendar className="w-4 h-4 text-yellow-600" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">Event created</p>
+                      <p className="text-xs text-gray-500">Game Design Symposium 2026</p>
+                      <p className="text-xs text-gray-400 mt-1">2 days ago</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quick Stats Chart */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5" />
+                  Monthly Overview
+                </CardTitle>
+                <CardDescription>User growth this month</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span>Book Club Members</span>
+                      <span className="font-semibold">8,234</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-orange-500 h-2 rounded-full" style={{ width: '82%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span>Authors</span>
+                      <span className="font-semibold">1,567</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-blue-500 h-2 rounded-full" style={{ width: '65%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span>Creatives</span>
+                      <span className="font-semibold">3,421</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-green-500 h-2 rounded-full" style={{ width: '75%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span>Total Downloads</span>
+                      <span className="font-semibold">45,892</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-purple-500 h-2 rounded-full" style={{ width: '92%' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Pending Approvals */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <Clock className="w-5 h-5" />
+                  Pending Approvals
+                </span>
+                <Badge variant="secondary">{pendingApprovals.length} items</Badge>
+              </CardTitle>
+              <CardDescription>Items requiring your attention</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Submitted By</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {pendingApprovals.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <Badge variant="outline">{item.type}</Badge>
+                      </TableCell>
+                      <TableCell className="font-medium">{item.title}</TableCell>
+                      <TableCell>{item.author}</TableCell>
+                      <TableCell className="text-sm text-gray-500">{item.date}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                            <CheckCircle className="w-4 h-4 mr-1" />
+                            Approve
+                          </Button>
+                          <Button size="sm" variant="destructive">
+                            <XCircle className="w-4 h-4 mr-1" />
+                            Reject
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Users Tab */}
+        <TabsContent value="users" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>User Management</CardTitle>
+                  <CardDescription>Manage all registered users</CardDescription>
+                </div>
+                <Button className="bg-blue-500 hover:bg-blue-600">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add User
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    placeholder="Search users..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Joined</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {recentUsers.map((user) => (
+                    <TableRow key={user.id}>
+                      <TableCell className="font-medium">{user.name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{user.type}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge className={
+                          user.status === "Active" ? "bg-green-500" :
+                          user.status === "Pending" ? "bg-yellow-500" :
+                          "bg-gray-500"
+                        }>
+                          {user.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-sm text-gray-500">{user.date}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="ghost">
+                            <Eye className="w-4 h-4" />
+                          </Button>
+                          <Button size="sm" variant="ghost">
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700">
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Books Tab */}
+        <TabsContent value="books" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Book Management</CardTitle>
+                  <CardDescription>Manage library books and publications</CardDescription>
+                </div>
+                <Button className="bg-orange-500 hover:bg-orange-600">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Book
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    placeholder="Search books..."
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Author</TableHead>
+                    <TableHead>Category</TableHead>
+                    <TableHead>Downloads</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {recentBooks.map((book) => (
+                    <TableRow key={book.id}>
+                      <TableCell className="font-medium">{book.title}</TableCell>
+                      <TableCell>{book.author}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{book.category}</Badge>
+                      </TableCell>
+                      <TableCell>{book.downloads.toLocaleString()}</TableCell>
+                      <TableCell>
+                        <Badge className={book.status === "Published" ? "bg-green-500" : "bg-gray-500"}>
+                          {book.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="ghost">
+                            <Eye className="w-4 h-4" />
+                          </Button>
+                          <Button size="sm" variant="ghost">
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700">
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Games Tab */}
+        <TabsContent value="games" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Game Management</CardTitle>
+                  <CardDescription>Manage games and interactive content</CardDescription>
+                </div>
+                <Button className="bg-pink-500 hover:bg-pink-600">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Game
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-center text-gray-500 py-8">Game management interface coming soon...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Events Tab */}
+        <TabsContent value="events" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Event Management</CardTitle>
+                  <CardDescription>Manage events and activities</CardDescription>
+                </div>
+                <Button className="bg-yellow-500 hover:bg-yellow-600">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Event
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-center text-gray-500 py-8">Event management interface coming soon...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Approvals Tab */}
+        <TabsContent value="approvals" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Pending Approvals</CardTitle>
+              <CardDescription>Review and approve submissions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Submitted By</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {pendingApprovals.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <Badge variant="outline">{item.type}</Badge>
+                      </TableCell>
+                      <TableCell className="font-medium">{item.title}</TableCell>
+                      <TableCell>{item.author}</TableCell>
+                      <TableCell className="text-sm text-gray-500">{item.date}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="ghost">
+                            <Eye className="w-4 h-4 mr-1" />
+                            Review
+                          </Button>
+                          <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                            <CheckCircle className="w-4 h-4 mr-1" />
+                            Approve
+                          </Button>
+                          <Button size="sm" variant="destructive">
+                            <XCircle className="w-4 h-4 mr-1" />
+                            Reject
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
