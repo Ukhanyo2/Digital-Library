@@ -32,10 +32,10 @@ export const TopNav = () => {
 
           {/* Navigation Links */}
           <div className="hidden md:flex space-x-8">
-            <a href="/" className="text-gray-700 hover:text-blue-600 transition">
+            <a href="/about" className="text-gray-700 hover:text-blue-600 transition">
               About
             </a>
-            <a href="/library" className="text-gray-700 hover:text-blue-600 transition">
+           <a href="/library" className="text-gray-700 hover:text-blue-600 transition">
               Library
             </a>
             <a href="/games" className="text-gray-700 hover:text-blue-600 transition">
