@@ -64,13 +64,14 @@ export const AboutUsPage = () => {
                       fontWeight: 400
                     }}
                   >
-                    Our Digital Library is designed to provide easy access to a wide range 
-                    of digital resources, including eBooks, academic materials, research 
-                    articles, learning tools, and the latest released games. It creates a 
-                    convenient and user-friendly space where users can explore, discover, 
-                    and study anytime and from anywhere. With organized categories and 
-                    regularly updated content, the platform supports students and 
-                    professionals in achieving their educational and personal goals.
+                    The Dream City project is a digital library and ecommerce store. This initiative aims to bridge
+the gap between aspiring writers and the resources they need to succeed, fostering a vibrant
+community of creativity and collaboration. By providing access to valuable information and
+tools, the Dream City project empowers individuals to enhance their skills and contribute
+meaningfully to society. Through workshops, mentorship programs, and online platforms, the
+Dream City project will facilitate networking opportunities and encourage the exchange of
+ideas, ultimately nurturing the next generation of talented writers and authors who can inspire
+change and innovation in their communities
                   </p>
                 </div>
               </div>
@@ -125,7 +126,7 @@ export const AboutUsPage = () => {
             <div className="relative h-[600px] overflow-visible">
               {/* Image with rounded corners */}
               <img
-                src="/src/components/assets/digi.jpeg"
+                src="/src/components/assets/IMG-20260302-WA0018.jpg"
                 alt="Digital Library"
                 className="w-full h-full object-cover rounded-3xl shadow-xl"
                 style={{ borderRadius: '30px' }}
