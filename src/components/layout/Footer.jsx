@@ -1,4 +1,4 @@
-import { Mail, Facebook, Instagram, Youtube, Twitter } from 'lucide-react'
+import { Mail, Instagram, Youtube, Twitter } from 'lucide-react'
 import { useState } from 'react'
 
 export const Footer = () => {
@@ -56,36 +56,31 @@ export const Footer = () => {
             {/* Social Media Icons */}
             <div className="flex space-x-4 pt-4">
               <a
-                href="https://instagram.com"
+                href="https://www.youtube.com/@thedreamcityprojects"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition duration-300 border border-gray-700 rounded-full p-2 hover:border-white"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition duration-300 border border-gray-700 rounded-full p-2 hover:border-white"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition duration-300 border border-gray-700 rounded-full p-2 hover:border-white"
+                title="YouTube"
               >
                 <Youtube size={18} />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://twitter.com/dreamcityprojects"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition duration-300 border border-gray-700 rounded-full p-2 hover:border-white"
+                title="X (Twitter)"
               >
                 <Twitter size={18} />
+              </a>
+              <a
+                href="https://instagram.com/dreamcityprojects"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition duration-300 border border-gray-700 rounded-full p-2 hover:border-white"
+                title="Instagram"
+              >
+                <Instagram size={18} />
               </a>
             </div>
           </div>
@@ -215,7 +210,7 @@ export const Footer = () => {
       {/* Bottom Bar - Copyright */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <p className="text-center text-xs text-gray-500 font-light tracking-widest uppercase">
-          Copyright © 2026 DIGITAL LIBRARY. All Rights Reserved.
+          © 2026 The Dream City Projects. All Rights Reserved.
         </p>
       </div>
     </footer>

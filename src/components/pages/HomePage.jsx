@@ -3,9 +3,9 @@ export const HomePage = () => {
   const featuredBooks = [
     {
       id: 1,
-      title: "The Art of Elegance",
-      author: "Unknown",
-      cover: "https://images.unsplash.com/photo-1507842217343-583f7270bfbb?w=400&h=600&fit=crop&q=80"
+      title: "Dream City",
+      author: "The Dream City Projects",
+      cover: "/images/dream-city.png"
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ export const HomePage = () => {
       <div 
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&h=1080&fit=crop&q=80")',
+          backgroundImage: 'url("/images/hero-lifestyle.jpg")',
           backgroundAttachment: 'fixed'
         }}
       >
