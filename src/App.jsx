@@ -4,9 +4,12 @@ import { AuthProvider } from '@/context/AuthContext'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/lib/queryClient'
 import { TopNav } from '@/components/layout/TopNav'
+import { Footer } from '@/components/layout/Footer'
+import { ScrollToTop } from '@/components/ScrollToTop'
 import { HomePage } from '@/components/pages/HomePage'
 import { GamesPage } from '@/components/pages/GamesPage' 
 import { AboutUsPage } from '@/components/pages/AboutUsPage'
+import { ContactPage } from '@/components/pages/ContactPage'
 import { BooksHub } from '@/components/library/BooksHub'
 import { RegistrationPage } from '@/components/auth/RegistrationPage'
 import { LoginPage } from '@/components/auth/LoginPage'
@@ -27,8 +30,10 @@ function AppRoutes() {
       <Route path="/events" element={<div className="p-6 min-h-screen bg-gray-900 text-white"><h1 className="text-2xl">Events Coming Soon</h1></div>} />
       
 
+      {/* Contact page */}
+      <Route path="/contacts" element={<ContactPage />} />
+      
       {/* Other placeholder routes */}
-      <Route path="/contacts" element={<div className="p-6 min-h-screen bg-gray-900 text-white"><h1 className="text-2xl">Contacts Coming Soon</h1></div>} />
       <Route path="/book-club-register" element={<div className="p-6 min-h-screen bg-gray-900 text-white"><h1 className="text-2xl">Book Club Registration Coming Soon</h1></div>} />
       <Route path="/author-register" element={<div className="p-6 min-h-screen bg-gray-900 text-white"><h1 className="text-2xl">Author Registration Coming Soon</h1></div>} />
     </Routes>
@@ -42,6 +47,8 @@ export default function App() {
         <BrowserRouter>
           <TopNav />
           <AppRoutes />
+          <Footer />
+          <ScrollToTop />
         </BrowserRouter>
       </AuthProvider>
     </QueryClientProvider>
