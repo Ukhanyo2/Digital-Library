@@ -66,7 +66,7 @@ export const AboutUsPage = () => {
                     className="leading-relaxed text-lg italic"
                     style={{ 
                       fontFamily: "'Georgia', serif",
-                      color: '#10b3e9', // Blue-500
+                      color: 'hsl(195, 61%, 64%)', // Blue-500
                       fontStyle: 'italic',
                       fontWeight: 500,
                       textShadow: '0 0 10px rgba(59,130,246,0.3)'
