@@ -1,6 +1,6 @@
 // src/components/pages/GamesPage.jsx
 import { useState } from 'react';
-import consoleImage from '@/components/assets/console.jpeg'; // Adjust the path as needed
+import consoleImage from '@/components/assets/console.jpeg'; 
 
 export const GamesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -46,7 +46,7 @@ export const GamesPage = () => {
               className="text-5xl md:text-7xl font-bold mb-4"
               style={{ 
                 fontFamily: "'Playfair Display', serif",
-                background: 'linear-gradient(135deg, #1d3cd7 0%, #4964ed 50%, #16adf3 100%)',
+                background: 'linear-gradient(135deg, #f6f6f8 0%, #f6f6f8 50%, #f6f6f8 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 textShadow: '0 0 30px rgba(255,255,255,0.2)'

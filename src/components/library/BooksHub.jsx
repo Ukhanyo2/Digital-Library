@@ -11,100 +11,127 @@ export const BooksHub = () => {
   // Hub view: Choose book type
   if (!selectedType) {
     return (
-      <div className="min-h-screen bg-black text-white font-sans">
+      <div className="min-h-screen text-white font-sans" style={{ backgroundColor: '#2a6199' }}>
+        {/* Import fonts - Matching About Us */}
+        <style jsx global>{`
+          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+          
+          body {
+            background-color: #2a6199;
+            margin: 0;
+            padding: 0;
+          }
+          
+          * {
+            transition: all 0.3s ease;
+          }
+        `}</style>
+
+        {/* Animated Background Elements */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse delay-700"></div>
+        </div>
+
         {/* Hero Section with Two Main Blocks */}
-        <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
           {/* Main Blocks Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-            {/* Free Access Books Block */}
+            {/* Free Access Books Block  */}
             <div
               onClick={() => setSelectedType('FREE')}
-              className="group cursor-pointer p-12 bg-gradient-to-br from-gray-900 to-black border border-gray-800 hover:border-white transition duration-300 relative overflow-hidden"
+              className="group cursor-pointer p-12 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-teal-400 transition-all duration-500 relative overflow-hidden rounded-2xl hover:-translate-y-2"
             >
-              {/* Background accent */}
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-5 transition duration-300"></div>
+              {/* Background accent  */}
+              <div className="absolute inset-0 bg-teal-400 opacity-0 group-hover:opacity-5 transition duration-300 rounded-2xl"></div>
               
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="font-serif text-4xl font-bold text-white">
+                  <h2 className="font-serif text-4xl font-bold text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
                     Free Access Books
                   </h2>
-                  <ChevronRight size={32} className="text-gray-400 group-hover:text-white transition duration-300" />
+                  <ChevronRight size={32} className="text-white/40 group-hover:text-teal-300 transition duration-300" />
                 </div>
                 
-                <p className="text-gray-300 font-light mb-8 leading-relaxed">
+                <p className="text-white/70 font-light mb-8 leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
                   Discover our carefully curated collection of freely accessible literature. No restrictions, no codes required.
                 </p>
                 
                 <div className="space-y-4">
-                  <p className="font-serif text-sm tracking-widest uppercase text-yellow-400">
+                  <p className="font-serif text-sm tracking-widest uppercase text-teal-300">
                     COLLECTION SIZE: {freeBooks.length} TITLES
                   </p>
-                  <a
-                    href="#"
+                  <button
                     onClick={(e) => {
                       e.preventDefault()
                       setSelectedType('FREE')
                     }}
-                    className="inline-block px-8 py-3 border border-white text-white font-serif text-lg hover:bg-white hover:text-black transition duration-300 tracking-wide uppercase"
+                    className="inline-block px-8 py-3 bg-white text-[#2a6199] font-serif text-lg 
+                             rounded-full hover:bg-teal-600 hover:text-white transition-all duration-300 
+                             transform hover:-translate-y-1 shadow-2xl hover:shadow-teal-500/30 
+                             tracking-wide uppercase"
                   >
                     View Collection
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* Premium Books Block */}
+            {/* Premium Books Block  */}
             <div
               onClick={() => setSelectedType('CODED')}
-              className="group cursor-pointer p-12 bg-gradient-to-br from-gray-950 via-black to-black border-2 border-yellow-400 hover:border-white transition duration-300 relative overflow-hidden shadow-2xl"
+              className="group cursor-pointer p-12 bg-white/5 backdrop-blur-sm border-2 border-teal-400 hover:border-teal-300 transition-all duration-500 relative overflow-hidden rounded-2xl hover:-translate-y-2 shadow-2xl"
             >
-              {/* Gold accent background */}
-              <div className="absolute inset-0 bg-yellow-400 opacity-0 group-hover:opacity-10 transition duration-300"></div>
+              {/* Teal accent background */}
+              <div className="absolute inset-0 bg-teal-400 opacity-0 group-hover:opacity-10 transition duration-300 rounded-2xl"></div>
               
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <Bookmark size={28} className="text-yellow-400" />
-                    <h2 className="font-serif text-4xl font-bold text-white">
+                    <Bookmark size={28} className="text-teal-300" />
+                    <h2 className="font-serif text-4xl font-bold text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
                       Premium Books
                     </h2>
                   </div>
-                  <span className="text-xs tracking-widest uppercase text-yellow-400 font-semibold">
+                  <span className="text-xs tracking-widest uppercase text-teal-300 font-semibold">
                     EXCLUSIVE
                   </span>
                 </div>
                 
-                <p className="text-gray-300 font-light mb-8 leading-relaxed">
+                <p className="text-white/70 font-light mb-8 leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
                   Access our exclusive premium collection with a receipt code. Unlock rare editions and curated selections.
                 </p>
                 
                 <div className="space-y-4">
-                  <p className="font-serif text-sm tracking-widest uppercase text-yellow-400">
+                  <p className="font-serif text-sm tracking-widest uppercase text-teal-300">
                     PREMIUM TITLES: {codedBooks.length} WORKS
                   </p>
-                  <a
-                    href="#"
+                  <button
                     onClick={(e) => {
                       e.preventDefault()
                       setSelectedType('CODED')
                     }}
-                    className="inline-block px-8 py-3 bg-yellow-400 text-black font-serif text-lg hover:bg-white transition duration-300 tracking-wide uppercase font-semibold"
+                    className="inline-block px-8 py-3 bg-teal-400 text-[#2a6199] font-serif text-lg 
+                             rounded-full hover:bg-teal-300 transition-all duration-300 
+                             transform hover:-translate-y-1 shadow-2xl hover:shadow-teal-500/30 
+                             tracking-wide uppercase font-semibold"
                   >
                     Explore Premium
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Editor's Choice Featured Section */}
-          <div className="mb-20 border-t border-gray-800 pt-20">
-            <h3 className="font-serif text-3xl font-bold mb-8 tracking-wide uppercase">
+          <div className="mb-20 border-t border-white/10 pt-20">
+            <h3 className="font-serif text-3xl font-bold mb-8 tracking-wide uppercase text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
               Featured: Book of the Month
             </h3>
             
-            <div className="relative w-full h-64 md:h-80 bg-gradient-to-r from-gray-900 via-black to-gray-900 border border-gray-800 overflow-hidden group cursor-pointer">
+            <div className="relative w-full h-64 md:h-80 bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden group cursor-pointer rounded-2xl">
               {/* Background pattern */}
               <div 
                 className="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition duration-500"
@@ -115,15 +142,15 @@ export const BooksHub = () => {
               
               {/* Content overlay */}
               <div className="relative z-10 h-full flex flex-col justify-end p-12">
-                <h4 className="font-serif text-3xl font-bold text-white mb-2">
+                <h4 className="font-serif text-3xl font-bold text-white mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Timeless Narratives
                 </h4>
-                <p className="text-gray-300 font-light max-w-2xl mb-6">
+                <p className="text-white/70 font-light max-w-2xl mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
                   This month's featured selection celebrates the art of storytelling across cultures and centuries. Discover profound narratives that resonate with contemporary readers.
                 </p>
                 <a
                   href="#"
-                  className="inline-flex items-center gap-2 text-yellow-400 hover:text-white transition duration-300 font-serif font-semibold uppercase tracking-wide"
+                  className="inline-flex items-center gap-2 text-teal-300 hover:text-white transition duration-300 font-serif font-semibold uppercase tracking-wide"
                 >
                   Explore Selection <ChevronRight size={20} />
                 </a>
@@ -132,26 +159,26 @@ export const BooksHub = () => {
           </div>
 
           {/* Book Club Registration Block */}
-          <div className="border-t border-gray-800 pt-20">
-            <h3 className="font-serif text-3xl font-bold mb-8 tracking-wide uppercase">
+          <div className="border-t border-white/10 pt-20">
+            <h3 className="font-serif text-3xl font-bold mb-8 tracking-wide uppercase text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
               Community
             </h3>
             
             <a
               href="/book-club-register"
-              className="group block p-12 bg-gradient-to-br from-gray-900 to-black border border-gray-800 hover:border-yellow-400 transition duration-300 relative overflow-hidden"
+              className="group block p-12 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-teal-400 transition-all duration-500 relative overflow-hidden rounded-2xl hover:-translate-y-2"
             >
-              {/* Hover accent */}
-              <div className="absolute inset-0 bg-yellow-400 opacity-0 group-hover:opacity-5 transition duration-300"></div>
+              {/* Hover accent - updated to teal */}
+              <div className="absolute inset-0 bg-teal-400 opacity-0 group-hover:opacity-5 transition duration-300 rounded-2xl"></div>
               
               <div className="relative z-10">
-                <h4 className="font-serif text-3xl font-bold text-white mb-4">
+                <h4 className="font-serif text-3xl font-bold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Join Book Club
                 </h4>
-                <p className="text-gray-300 font-light mb-6 max-w-2xl leading-relaxed">
+                <p className="text-white/70 font-light mb-6 max-w-2xl leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
                   Connect with fellow book enthusiasts, participate in curated discussions, and gain exclusive access to author events and literary programming.
                 </p>
-                <div className="flex items-center gap-2 text-yellow-400 group-hover:text-white transition duration-300 font-serif font-semibold uppercase tracking-widest text-sm">
+                <div className="flex items-center gap-2 text-teal-300 group-hover:text-white transition duration-300 font-serif font-semibold uppercase tracking-widest text-sm">
                   Register Now <ChevronRight size={20} />
                 </div>
               </div>
@@ -168,27 +195,55 @@ export const BooksHub = () => {
   const bookType = isCoded ? 'coded' : 'free'
 
   const bookListContent = (
-    <div className="min-h-screen bg-black text-white font-sans">
-      <div className="max-w-7xl mx-auto px-6 py-12">
+    <div className="min-h-screen text-white font-sans" style={{ backgroundColor: '#2a6199' }}>
+      {/* Import fonts */}
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+          background-color: #2a6199;
+          margin: 0;
+          padding: 0;
+        }
+      `}</style>
+
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse delay-700"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
         <button
           onClick={() => setSelectedType(null)}
-          className="mb-12 px-6 py-3 border border-gray-700 text-gray-300 hover:border-white hover:text-white transition duration-300 font-serif uppercase text-sm tracking-widest"
+          className="mb-12 px-6 py-3 border border-white/20 text-white/70 hover:border-teal-400 hover:text-teal-300 transition duration-300 font-serif uppercase text-sm tracking-widest rounded-full"
         >
           ← Back to Library
         </button>
 
         <div className="mb-16">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4 text-white">
+          <h1 
+            className="font-serif text-5xl md:text-6xl font-bold mb-4"
+            style={{ 
+              fontFamily: "'Playfair Display', serif",
+              background: 'linear-gradient(135deg, #fff 0%, #e0f2fe 50%, #fff 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0 0 30px rgba(255,255,255,0.2)'
+            }}
+          >
             {isCoded ? 'Premium Collection' : 'Free Access'}
           </h1>
-          <p className="text-gray-400 font-light text-lg max-w-2xl leading-relaxed">
+          <p className="text-white/70 font-light text-lg max-w-2xl leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
             {isCoded
               ? 'Exclusive premium selections. Unlock with your receipt code to access rare and curated titles.'
               : 'Freely accessible literature curated for your discovery. Download instantly and read anywhere.'}
           </p>
           
-          <div className="mt-8 pt-8 border-t border-gray-800">
-            <p className="font-serif text-sm tracking-widest uppercase text-yellow-400">
+          <div className="mt-8 pt-8 border-t border-white/10">
+            <p className="font-serif text-sm tracking-widest uppercase text-teal-300">
               {isCoded ? 'PREMIUM WORKS' : 'COLLECTION SIZE'}: {books.length} TITLES
             </p>
           </div>
@@ -213,7 +268,7 @@ export const BooksHub = () => {
   return <AuthGate bookType={bookType}>{bookListContent}</AuthGate>
 }
 
-// Premium Access Receipt Code Section Component
+// Premium Access Receipt Code Section Component 
 const PremiumAccessSection = () => {
   const [receiptCode, setReceiptCode] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -228,7 +283,6 @@ const PremiumAccessSection = () => {
 
     try {
       // Simulate receipt code verification
-      // In a real app, this would call your backend API
       await new Promise(resolve => setTimeout(resolve, 1500))
       
       setCodeStatus('success')
@@ -246,21 +300,21 @@ const PremiumAccessSection = () => {
   }
 
   return (
-    <div className="mb-16 border-b border-gray-800 pb-16">
-      <div className="border border-yellow-400 bg-gradient-to-r from-black via-black/80 to-black p-12 relative overflow-hidden group">
+    <div className="mb-16 border-b border-white/10 pb-16">
+      <div className="bg-white/5 backdrop-blur-sm border border-teal-400/30 p-12 relative overflow-hidden group rounded-2xl hover:border-teal-400 transition-all duration-500">
         {/* Background accent */}
-        <div className="absolute inset-0 bg-yellow-400 opacity-0 group-hover:opacity-5 transition duration-300"></div>
+        <div className="absolute inset-0 bg-teal-400 opacity-0 group-hover:opacity-5 transition duration-300 rounded-2xl"></div>
 
         <div className="relative z-10">
           <div className="flex items-start gap-4 mb-6">
-            <div className="p-3 border border-yellow-400 rounded-lg">
-              <Lock size={24} className="text-yellow-400" />
+            <div className="p-3 border border-teal-400/30 rounded-lg bg-white/5">
+              <Lock size={24} className="text-teal-300" />
             </div>
             <div>
-              <h3 className="font-serif text-2xl font-bold text-white mb-2">
+              <h3 className="font-serif text-2xl font-bold text-white mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Unlock Premium Access
               </h3>
-              <p className="text-gray-400 font-light">
+              <p className="text-white/70 font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
                 Enter your receipt code to unlock premium titles
               </p>
             </div>
@@ -274,26 +328,29 @@ const PremiumAccessSection = () => {
                 value={receiptCode}
                 onChange={(e) => setReceiptCode(e.target.value.toUpperCase())}
                 placeholder="ENTER RECEIPT CODE"
-                className="flex-1 px-6 py-3 bg-black border border-gray-700 text-white placeholder-gray-500 focus:border-yellow-400 focus:outline-none transition duration-300 font-serif uppercase text-sm tracking-widest"
+                className="flex-1 px-6 py-3 bg-white/5 backdrop-blur-sm border border-white/10 text-white placeholder-white/40 focus:border-teal-400 focus:outline-none transition duration-300 font-serif uppercase text-sm tracking-widest rounded-xl"
                 disabled={codeStatus === 'verifying'}
               />
               <button
                 type="submit"
                 disabled={!receiptCode.trim() || codeStatus === 'verifying'}
-                className="px-8 py-3 bg-yellow-400 text-black font-serif font-semibold uppercase tracking-widest text-sm hover:bg-white transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-teal-400 text-[#2a6199] font-serif font-semibold uppercase tracking-widest text-sm 
+                         rounded-full hover:bg-teal-300 transition-all duration-300 
+                         transform hover:-translate-y-1 shadow-2xl hover:shadow-teal-500/30 
+                         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
                 {codeStatus === 'verifying' ? 'Verifying...' : 'Verify'}
               </button>
             </div>
 
-            {/* Status Messages */}
+            {/* Status Messages  */}
             {submitted && (
-              <div className={`text-sm font-light tracking-wide p-3 rounded border ${
+              <div className={`text-sm font-light tracking-wide p-3 rounded-xl border ${
                 codeStatus === 'success'
-                  ? 'bg-green-950 border-green-800 text-green-300'
+                  ? 'bg-teal-500/20 border-teal-400 text-teal-300'
                   : codeStatus === 'error'
-                  ? 'bg-red-950 border-red-800 text-red-300'
-                  : 'bg-yellow-950 border-yellow-800 text-yellow-300'
+                  ? 'bg-red-500/20 border-red-400 text-red-300'
+                  : 'bg-teal-500/10 border-teal-400/30 text-teal-300'
               }`}>
                 {codeStatus === 'success' && '✓ Code verified! Access granted to all premium titles.'}
                 {codeStatus === 'error' && '✗ Invalid code. Please check and try again.'}
@@ -303,9 +360,9 @@ const PremiumAccessSection = () => {
           </form>
 
           {/* Information */}
-          <div className="mt-8 pt-8 border-t border-gray-800">
-            <p className="text-xs text-gray-500 font-light leading-relaxed max-w-xl">
-              Don't have a receipt code? Visit the <a href="/" className="text-yellow-400 hover:text-white transition duration-300">homepage</a> to learn about premium membership options, or contact our <a href="/contacts" className="text-yellow-400 hover:text-white transition duration-300">support team</a>.
+          <div className="mt-8 pt-8 border-t border-white/10">
+            <p className="text-xs text-white/40 font-light leading-relaxed max-w-xl" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Don't have a receipt code? Visit the <a href="/" className="text-teal-300 hover:text-white transition duration-300">homepage</a> to learn about premium membership options, or contact our <a href="/contacts" className="text-teal-300 hover:text-white transition duration-300">support team</a>.
             </p>
           </div>
         </div>
