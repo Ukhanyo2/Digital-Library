@@ -92,49 +92,8 @@ export const AboutUsPage = () => {
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div className="mb-32">
-          <div className="text-center mb-12">
-            <span className="inline-block px-4 py-2 bg-teal-500/20 rounded-full text-teal-300 font-semibold tracking-wider text-sm uppercase mb-4 border border-teal-500/30">
-              What We Offer
-            </span>
-            
-          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: '📚', title: 'Extensive Library', desc: 'Thousands of digital books across all genres', color: 'blue' },
-              { icon: '🎮', title: 'Latest Games', desc: 'Discover new releases from talented developers', color: 'teal' },
-              { icon: '🎨', title: 'Creative Community', desc: 'Connect with designers and artists worldwide', color: 'blue' },
-              { icon: '✨', title: 'Regular Events', desc: 'Workshops, launches, and creative meetups', color: 'teal' }
-            ].map((feature, index) => (
-              <div 
-                key={index}
-                className="group relative bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-white/30 transition-all duration-500 hover:-translate-y-2"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative z-10">
-                  <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform">{feature.icon}</div>
-                  <h3 className={`text-lg font-bold text-${feature.color}-300 mb-2`}>{feature.title}</h3>
-                  <p className="text-white/60 text-sm">{feature.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Our Values Section */}
-        <div className="mb-16">
-          <div className="max-w-4xl mx-auto text-center mb-8">
-            <p className="text-base text-gray-300 leading-relaxed">
-              We value <span className="font-semibold text-blue-400 hover:text-yellow-400 transition-colors duration-300">accessibility</span> by making digital content available to everyone, 
-              regardless of location or background. We value <span className="font-semibold text-yellow-400 hover:text-blue-400 transition-colors duration-300">innovation</span> by constantly improving 
-              and evolving our platform to better serve our community. We value <span className="font-semibold text-blue-400 hover:text-yellow-400 transition-colors duration-300">quality</span> by 
-              curating only the best content and maintaining high standards across all offerings.
-            </p>
-          </div>
-        </div>
-
+          
         {/* Call to Action */}
         <div className="text-center">
           <div className="inline-block">

@@ -30,7 +30,7 @@ export const TopNav = () => {
               </a>
             </div>
 
-            {/* Navigation Links - Updated hover colors */}
+            {/* Navigation Links */}
             <div className="hidden md:flex space-x-8">
               <a href="/" className="text-white/80 hover:text-teal-300 transition">
                 Home
@@ -59,6 +59,13 @@ export const TopNav = () => {
             <div className="flex items-center space-x-6">
               {user ? (
                 <div className="flex items-center space-x-6">
+                  {/* Profile Link*/}
+                  <a
+                    href="/profile"
+                    className="text-white/80 hover:text-teal-300 transition duration-300 text-sm"
+                  >
+                    Profile
+                  </a>
                   <span className="text-xs text-white/60 font-light tracking-wide hidden sm:inline">
                     <span className="text-teal-300 font-semibold">{user.email}</span>
                   </span>
