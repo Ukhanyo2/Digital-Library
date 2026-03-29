@@ -13,6 +13,7 @@ import { ContactPage } from '@/components/pages/ContactPage'
 import { BooksHub } from '@/components/library/BooksHub'
 import { RegistrationPage } from '@/components/auth/RegistrationPage'
 import { LoginPage } from '@/components/auth/LoginPage'
+import { ProfilePage } from '@/components/pages/ProfilePage'
 
 function AppRoutes() {
   return (
@@ -22,6 +23,7 @@ function AppRoutes() {
       <Route path="/register" element={<RegistrationPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/about" element={<AboutUsPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
       
       {/* Card navigation routes */}
       <Route path="/games" element={<GamesPage />} /> {/* Updated to use GamesPage */}

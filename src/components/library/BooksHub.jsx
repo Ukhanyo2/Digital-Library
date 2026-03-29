@@ -3,6 +3,7 @@ import { BooksList } from './BooksList'
 import { useBooks } from '@/hooks/useBooks'
 import { AuthGate } from './AuthGate'
 import { ChevronRight, Bookmark, Lock } from 'lucide-react'
+import { userService } from '@/services/userService'
 
 export const BooksHub = () => {
   const [selectedType, setSelectedType] = useState(null) // null, 'FREE', 'CODED'
@@ -12,7 +13,7 @@ export const BooksHub = () => {
   if (!selectedType) {
     return (
       <div className="min-h-screen text-white font-sans" style={{ backgroundColor: '#2a6199' }}>
-        {/* Import fonts - Matching About Us */}
+        {/* Import fonts */}
         <style jsx global>{`
           @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -84,7 +85,6 @@ export const BooksHub = () => {
               onClick={() => setSelectedType('CODED')}
               className="group cursor-pointer p-12 bg-white/5 backdrop-blur-sm border-2 border-teal-400 hover:border-teal-300 transition-all duration-500 relative overflow-hidden rounded-2xl hover:-translate-y-2 shadow-2xl"
             >
-              {/* Teal accent background */}
               <div className="absolute inset-0 bg-teal-400 opacity-0 group-hover:opacity-10 transition duration-300 rounded-2xl"></div>
               
               <div className="relative z-10">
@@ -140,7 +140,6 @@ export const BooksHub = () => {
                 }}
               ></div>
               
-              {/* Content overlay */}
               <div className="relative z-10 h-full flex flex-col justify-end p-12">
                 <h4 className="font-serif text-3xl font-bold text-white mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Timeless Narratives
@@ -168,9 +167,8 @@ export const BooksHub = () => {
               href="/book-club-register"
               className="group block p-12 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-teal-400 transition-all duration-500 relative overflow-hidden rounded-2xl hover:-translate-y-2"
             >
-              {/* Hover accent - updated to teal */}
               <div className="absolute inset-0 bg-teal-400 opacity-0 group-hover:opacity-5 transition duration-300 rounded-2xl"></div>
-              
+              {/* Hover accent - updated to teal */}
               <div className="relative z-10">
                 <h4 className="font-serif text-3xl font-bold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Join Book Club
@@ -196,7 +194,6 @@ export const BooksHub = () => {
 
   const bookListContent = (
     <div className="min-h-screen text-white font-sans" style={{ backgroundColor: '#2a6199' }}>
-      {/* Import fonts */}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -208,7 +205,6 @@ export const BooksHub = () => {
         }
       `}</style>
 
-      {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -230,13 +226,12 @@ export const BooksHub = () => {
               fontFamily: "'Playfair Display', serif",
               background: 'linear-gradient(135deg, #fff 0%, #e0f2fe 50%, #fff 100%)',
               WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              textShadow: '0 0 30px rgba(255,255,255,0.2)'
+              WebkitTextFillColor: 'transparent'
             }}
           >
             {isCoded ? 'Premium Collection' : 'Free Access'}
           </h1>
-          <p className="text-white/70 font-light text-lg max-w-2xl leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <p className="text-white/70 font-light text-lg max-w-2xl leading-relaxed">
             {isCoded
               ? 'Exclusive premium selections. Unlock with your receipt code to access rare and curated titles.'
               : 'Freely accessible literature curated for your discovery. Download instantly and read anywhere.'}
@@ -249,10 +244,8 @@ export const BooksHub = () => {
           </div>
         </div>
 
-        {/* Premium Access Receipt Code Section - Only for Coded Books */}
-        {isCoded && (
-          <PremiumAccessSection />
-        )}
+        {/* Premium Access Section - Only for Coded Books */}
+        {isCoded && <PremiumAccessSection />}
 
         <BooksList books={books} isLoading={isLoading} isCoded={isCoded} />
       </div>
@@ -273,6 +266,7 @@ const PremiumAccessSection = () => {
   const [receiptCode, setReceiptCode] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [codeStatus, setCodeStatus] = useState('idle') // idle, verifying, success, error
+  const [message, setMessage] = useState('')
 
   const handleSubmitCode = async (e) => {
     e.preventDefault()
@@ -280,21 +274,25 @@ const PremiumAccessSection = () => {
 
     setCodeStatus('verifying')
     setSubmitted(true)
+    setMessage('')
 
     try {
-      // Simulate receipt code verification
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
+      const result = await userService.verifyReceiptCode(receiptCode)
       setCodeStatus('success')
+      setMessage(result.message)
       setReceiptCode('')
+      
       setTimeout(() => {
         setSubmitted(false)
         setCodeStatus('idle')
+        setMessage('')
       }, 3000)
     } catch (err) {
       setCodeStatus('error')
+      setMessage(err.message)
       setTimeout(() => {
         setCodeStatus('idle')
+        setMessage('')
       }, 3000)
     }
   }
@@ -302,7 +300,6 @@ const PremiumAccessSection = () => {
   return (
     <div className="mb-16 border-b border-white/10 pb-16">
       <div className="bg-white/5 backdrop-blur-sm border border-teal-400/30 p-12 relative overflow-hidden group rounded-2xl hover:border-teal-400 transition-all duration-500">
-        {/* Background accent */}
         <div className="absolute inset-0 bg-teal-400 opacity-0 group-hover:opacity-5 transition duration-300 rounded-2xl"></div>
 
         <div className="relative z-10">
@@ -311,16 +308,15 @@ const PremiumAccessSection = () => {
               <Lock size={24} className="text-teal-300" />
             </div>
             <div>
-              <h3 className="font-serif text-2xl font-bold text-white mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h3 className="font-serif text-2xl font-bold text-white mb-2">
                 Unlock Premium Access
               </h3>
-              <p className="text-white/70 font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <p className="text-white/70 font-light">
                 Enter your receipt code to unlock premium titles
               </p>
             </div>
           </div>
 
-          {/* Receipt Code Form */}
           <form onSubmit={handleSubmitCode} className="max-w-md">
             <div className="flex flex-col sm:flex-row gap-3 mb-4">
               <input
@@ -343,7 +339,6 @@ const PremiumAccessSection = () => {
               </button>
             </div>
 
-            {/* Status Messages  */}
             {submitted && (
               <div className={`text-sm font-light tracking-wide p-3 rounded-xl border ${
                 codeStatus === 'success'
@@ -353,15 +348,14 @@ const PremiumAccessSection = () => {
                   : 'bg-teal-500/10 border-teal-400/30 text-teal-300'
               }`}>
                 {codeStatus === 'success' && '✓ Code verified! Access granted to all premium titles.'}
-                {codeStatus === 'error' && '✗ Invalid code. Please check and try again.'}
+                {codeStatus === 'error' && `✗ ${message}`}
                 {codeStatus === 'verifying' && 'Verifying your code...'}
               </div>
             )}
           </form>
 
-          {/* Information */}
           <div className="mt-8 pt-8 border-t border-white/10">
-            <p className="text-xs text-white/40 font-light leading-relaxed max-w-xl" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <p className="text-xs text-white/40 font-light leading-relaxed max-w-xl">
               Don't have a receipt code? Visit the <a href="/" className="text-teal-300 hover:text-white transition duration-300">homepage</a> to learn about premium membership options, or contact our <a href="/contacts" className="text-teal-300 hover:text-white transition duration-300">support team</a>.
             </p>
           </div>
