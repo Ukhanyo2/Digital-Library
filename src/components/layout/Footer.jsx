@@ -163,6 +163,23 @@ export const Footer = () => {
             </ul>
           </div>
 
+
+<div className="space-y-6">
+  <h3 className="font-serif text-lg font-bold tracking-widest uppercase text-white">Legal</h3>
+  <ul className="space-y-3">
+    <li>
+      <a href="/terms" className="text-white/60 text-sm font-light hover:text-teal-300 transition duration-300 tracking-wide">
+        Terms & Conditions
+      </a>
+    </li>
+    <li>
+      <a href="/privacy" className="text-white/60 text-sm font-light hover:text-teal-300 transition duration-300 tracking-wide">
+        Privacy Policy
+      </a>
+    </li>
+  </ul>
+</div>
+
           {/* Column 4: Support */}
           <div className="space-y-6">
             <h3 className="font-serif text-lg font-bold tracking-widest uppercase text-white">Support</h3>

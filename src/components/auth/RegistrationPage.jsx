@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '@/services/supabaseClient'
-// Add this right after the useState declarations in RegistrationPage
+
 console.log('🔍 Checking Supabase credentials:')
 console.log('URL:', import.meta.env.VITE_SUPABASE_URL)
 console.log('Key exists:', !!import.meta.env.VITE_SUPABASE_ANON_KEY)
@@ -24,11 +24,18 @@ export const RegistrationPage = () => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
+const [agreeToTerms, setAgreeToTerms] = useState(false)
+const [termsError, setTermsError] = useState('')
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
+  e.preventDefault()
+  setError('')
+  setTermsError('')
 
+  if (!agreeToTerms) {
+    setTermsError('You must agree to the Terms and Conditions to register')
+    return
+  }
     // Validate
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match')
@@ -43,7 +50,7 @@ export const RegistrationPage = () => {
     setLoading(true)
 
     try {
-      // Sign up with Supabase Auth - include user metadata
+      
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -59,8 +66,7 @@ export const RegistrationPage = () => {
         return
       }
 
-      // The trigger will automatically create the user profile
-      // Redirect to login page after successful registration
+     
       alert('Registration successful! Please check your email to confirm your account.')
       navigate('/login', { replace: true })
     } catch (err) {
@@ -190,6 +196,35 @@ export const RegistrationPage = () => {
             </p>
           )}
 
+
+
+
+
+<div className="flex items-start gap-3">
+  <input
+    type="checkbox"
+    id="agreeToTerms"
+    checked={agreeToTerms}
+    onChange={(e) => setAgreeToTerms(e.target.checked)}
+    className="mt-1 w-4 h-4 bg-white/5 border border-white/20 rounded focus:ring-teal-400"
+  />
+  <label htmlFor="agreeToTerms" className="text-white/60 text-sm font-light">
+    I have read and agree to the{' '}
+    <a href="/terms" target="_blank" className="text-teal-300 hover:text-teal-200 transition">
+      Terms and Conditions
+    </a>
+    {' '}and{' '}
+    <a href="/privacy" target="_blank" className="text-teal-300 hover:text-teal-200 transition">
+      Privacy Policy
+    </a>
+  </label>
+</div>
+
+{termsError && (
+  <p className="text-red-300 text-sm bg-red-500/20 border border-red-400/30 p-3 rounded-xl">
+    {termsError}
+  </p>
+)}
           <button
             type="submit"
             disabled={loading}
