@@ -14,6 +14,8 @@ import { BooksHub } from '@/components/library/BooksHub'
 import { RegistrationPage } from '@/components/auth/RegistrationPage'
 import { LoginPage } from '@/components/auth/LoginPage'
 import { ProfilePage } from '@/components/pages/ProfilePage'
+import { TermsPage } from '@/components/pages/TermsPage'
+import { PrivacyPage } from '@/components/pages/PrivacyPage'
 
 function AppRoutes() {
   return (
@@ -24,6 +26,8 @@ function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/about" element={<AboutUsPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/terms" element={<TermsPage />} />
+<Route path="/privacy" element={<PrivacyPage />} />
       
       {/* Card navigation routes */}
       <Route path="/games" element={<GamesPage />} /> {/* Updated to use GamesPage */}
