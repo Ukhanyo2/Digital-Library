@@ -4,6 +4,7 @@ import { useBooks } from '@/hooks/useBooks'
 import { AuthGate } from './AuthGate'
 import { ChevronRight, Bookmark, Lock } from 'lucide-react'
 import { userService } from '@/services/userService'
+import { FEATURED_BOOKS } from '@/constants/featuredBooks'
 
 export const BooksHub = () => {
   const [selectedType, setSelectedType] = useState(null) // null, 'FREE', 'CODED'
@@ -62,7 +63,7 @@ export const BooksHub = () => {
                 
                 <div className="space-y-4">
                   <p className="font-serif text-sm tracking-widest uppercase text-teal-300">
-                    COLLECTION SIZE: {freeBooks.length} TITLES
+                    COLLECTION SIZE: {freeBooks.length + FEATURED_BOOKS.length} TITLES
                   </p>
                   <button
                     onClick={(e) => {
@@ -188,7 +189,7 @@ export const BooksHub = () => {
   }
 
   // Books list view - only use AuthGate for free books
-  const books = selectedType === 'FREE' ? freeBooks : codedBooks
+  const books = selectedType === 'FREE' ? [...FEATURED_BOOKS, ...freeBooks] : codedBooks
   const isCoded = selectedType === 'CODED'
   const bookType = isCoded ? 'coded' : 'free'
 

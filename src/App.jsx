@@ -1,5 +1,6 @@
 // App.jsx or routes file
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
 import { AuthProvider } from '@/context/AuthContext'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/lib/queryClient'
@@ -14,8 +15,11 @@ import { BooksHub } from '@/components/library/BooksHub'
 import { RegistrationPage } from '@/components/auth/RegistrationPage'
 import { LoginPage } from '@/components/auth/LoginPage'
 import { ProfilePage } from '@/components/pages/ProfilePage'
-import { TermsPage } from '@/components/pages/TermsPage'
-import { PrivacyPage } from '@/components/pages/PrivacyPage'
+import { CreativesPage } from '@/components/pages/CreativesPage'
+import { Events } from '@/components/pages/EventsPage'
+import CookieBanner from '@/components/CookiesBanner'
+import { initGA } from '@/lib/analytics'
+import usePageTracking from '@/hooks/usePageTracking'
 
 function AppRoutes() {
   return (
@@ -26,14 +30,12 @@ function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/about" element={<AboutUsPage />} />
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/terms" element={<TermsPage />} />
-<Route path="/privacy" element={<PrivacyPage />} />
       
       {/* Card navigation routes */}
-      <Route path="/games" element={<GamesPage />} /> {/* Updated to use GamesPage */}
+      <Route path="/games" element={<GamesPage />} />
       <Route path="/games/:id" element={<div className="p-6 min-h-screen bg-gray-900 text-white"><h1 className="text-2xl">Game Details Coming Soon</h1></div>} />
-      <Route path="/creatives" element={<div className="p-6 min-h-screen bg-gray-900 text-white"><h1 className="text-2xl">Creatives Coming Soon</h1></div>} />
-      <Route path="/events" element={<div className="p-6 min-h-screen bg-gray-900 text-white"><h1 className="text-2xl">Events Coming Soon</h1></div>} />
+      <Route path="/creatives" element={<CreativesPage />} />
+      <Route path="/events" element={<Events />} />
       
 
       {/* Contact page */}
@@ -47,16 +49,32 @@ function AppRoutes() {
 }
 
 export default function App() {
+  // Check if user already accepted cookies
+  useEffect(() => {
+    const consent = localStorage.getItem('cookiesAccepted')
+    if (consent === 'true') {
+      initGA()
+    }
+  }, [])
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <BrowserRouter>
+          <PageTracker />
           <TopNav />
           <AppRoutes />
           <Footer />
           <ScrollToTop />
+          <CookieBanner />
         </BrowserRouter>
       </AuthProvider>
     </QueryClientProvider>
   )
+}
+
+// Wrapper component for page tracking
+function PageTracker() {
+  usePageTracking()
+  return null
 }

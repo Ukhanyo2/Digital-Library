@@ -1,5 +1,5 @@
 import { FixedSizeList as List } from 'react-window'
-import { BookCard } from './BookCard'
+import { BookCard } from '@/components/BookCard'
 
 export const VirtualLibraryList = ({ books, height, itemCount, isOnline }) => {
   const Row = ({ index, style }) => (

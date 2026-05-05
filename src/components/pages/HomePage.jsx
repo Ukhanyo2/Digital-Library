@@ -1,29 +1,33 @@
 export const HomePage = () => {
-  // Sample book cover data - replace with actual books from your library
+  
   const featuredBooks = [
     {
-      id: 1,
+      id: 'featured-1',
       title: "Dream City",
       author: "The Dream City Projects",
-      cover: "/images/dream-city.png"
+      cover: "/images/Dream CIty.jpg",
+      file: "/books/dream-city.pdf"
     },
     {
-      id: 2,
-      title: "Luxury Collections",
-      author: "Premium Author",
-      cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop&q=80"
+      id: 'featured-2',
+      title: "Cayla Dowie The Dream City and The Fairy",
+      author: "The Dream City Projects",
+      cover: "/images/Cayla Dowie The Dream City And The Fairy.jpg",
+      file: "/books/cayla-dowie.pdf"
     },
     {
-      id: 3,
-      title: "Modern Aesthetics",
-      author: "Design Master",
-      cover: "https://images.unsplash.com/photo-1519452575417-564c1401ecc0?w=400&h=600&fit=crop&q=80"
+      id: 'featured-3',
+      title: "Picturebook 1",
+      author: "The Dream City Projects",
+      cover: "/images/Picturebook 1.jpg",
+      file: "/books/picturebook-1.pdf"
     },
     {
-      id: 4,
-      title: "Cultural Tapestry",
-      author: "Heritage Guide",
-      cover: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&h=600&fit=crop&q=80"
+      id: 'featured-4',
+      title: "The Dream City children's book",
+      author: "The Dream City Projects",
+      cover: "/images/The Dream City children's book (1).jpg",
+      file: "/books/dream-city-children.pdf"
     },
   ];
 
@@ -31,7 +35,7 @@ export const HomePage = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       {/* Hero Section with Background Image */}
       <div 
-        className="relative w-full h-screen bg-cover bg-center flex items-center justify-center overflow-hidden"
+        className="relative w-full h-screen bg-cover bg-center flex items-center justify-center overflow-hidden hero-section"
         style={{
           backgroundImage: 'url("/images/hero-lifestyle.jpg")',
           backgroundAttachment: 'fixed'
@@ -41,46 +45,50 @@ export const HomePage = () => {
         <div className="absolute inset-0 bg-black/40"></div>
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <h1 className="font-serif text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Welcome to Digital Library
           </h1>
-          <p className="text-xl md:text-2xl text-gray-200 mb-12 font-light tracking-wide">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 mb-6 sm:mb-12 font-light tracking-wide">
             Discover thousands of books. Download instantly. Read anywhere.
           </p>
           <a
             href="/library"
-            className="inline-block px-10 py-4 border-2 border-white text-white font-serif text-lg hover:bg-white hover:text-black transition duration-300 ease-out tracking-widest"
+            className="inline-block px-6 sm:px-10 py-2 sm:py-4 border-2 border-white text-white font-serif text-sm sm:text-lg hover:bg-white hover:text-black transition duration-300 ease-out tracking-widest"
           >
             EXPLORE LIBRARY →
           </a>
         </div>
 
         {/* Location Tag - Bottom Right */}
-        <div className="absolute bottom-8 right-8 z-20">
-          <p className="text-sm tracking-widest uppercase text-gray-300 font-light">
+        <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 z-20">
+          <p className="text-xs sm:text-sm tracking-widest uppercase text-gray-300 font-light">
             Premium Collection
           </p>
         </div>
       </div>
 
       {/* Premium Book Grid Section */}
-      <div className="bg-black py-24 px-6">
+      <div className="py-12 sm:py-24 px-4 sm:px-6" style={{ backgroundColor: '#1e4a7a' }}>
         <div className="max-w-7xl mx-auto">
-          <h2 className="font-serif text-5xl md:text-6xl text-center mb-4 text-white">
+          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-center mb-3 sm:mb-4 text-white">
             Featured Collection
           </h2>
-          <p className="text-center text-gray-400 mb-16 text-lg font-light tracking-wide">
+          <p className="text-center text-gray-300 mb-8 sm:mb-16 text-sm sm:text-lg font-light tracking-wide">
             Curated Selection of Premium Content
           </p>
 
           {/* Book Cover Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredBooks.map((book) => (
-              <div 
+              <a
                 key={book.id}
-                className="group cursor-pointer transform transition duration-300 hover:scale-105"
+                href={book.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group cursor-pointer transform transition duration-300 hover:scale-105 block"
               >
+
                 {/* Book Cover */}
                 <div className="relative mb-6 overflow-hidden bg-gray-900 aspect-[9/12]">
                   <img
@@ -101,33 +109,33 @@ export const HomePage = () => {
                     {book.author}
                   </p>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
       </div>
 
       {/* CTA Section */}
-      <div className="relative bg-gradient-to-b from-black via-black to-gray-900 py-20 px-6 border-t border-gray-800">
+      <div className="relative py-12 sm:py-20 px-4 sm:px-6 border-t" style={{ backgroundColor: '#1e4a7a', borderColor: '#2a6199' }}>
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-serif text-4xl md:text-5xl text-white mb-6">
+          <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl text-white mb-4 sm:mb-6">
             Ready to Start Your Journey?
           </h2>
-          <p className="text-lg text-gray-300 mb-10 font-light leading-relaxed">
+          <p className="text-sm sm:text-lg text-gray-300 mb-6 sm:mb-10 font-light leading-relaxed">
             Join thousands of book enthusiasts exploring our premium collection
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row justify-center gap-6 items-center">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6 items-center">
             <a
               href="/register"
-              className="px-12 py-4 bg-white text-black font-serif font-semibold text-lg hover:bg-gray-200 transition duration-300 tracking-wide"
+              className="w-full sm:w-auto px-8 sm:px-12 py-3 sm:py-4 bg-white text-black font-serif font-semibold text-sm sm:text-lg hover:bg-gray-200 transition duration-300 tracking-wide text-center"
             >
               CREATE ACCOUNT
             </a>
             <a
               href="/login"
-              className="px-12 py-4 border-2 border-white text-white font-serif text-lg hover:bg-white hover:text-black transition duration-300 tracking-wide"
+              className="w-full sm:w-auto px-8 sm:px-12 py-3 sm:py-4 border-2 border-white text-white font-serif text-sm sm:text-lg hover:bg-white hover:text-black transition duration-300 tracking-wide text-center"
             >
               SIGN IN
             </a>

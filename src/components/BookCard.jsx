@@ -1,93 +1,182 @@
-import { Wifi, WifiOff, Download, CheckCircle, AlertCircle } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from '@/hooks/useAuth'
+import { useUserAccess } from '@/hooks/useUserAccess'
+import { RedemptionForm } from './RedemptionForm'
+import { Download, Lock, ChevronRight } from 'lucide-react'
 
-export const BookCard = ({ book, onDownload, isOnline }) => {
+export const BookCard = ({ book, isCoded }) => {
+  const { user } = useAuth()
+  const { checkAccess, grantAccess } = useUserAccess()
+  const [showRedemption, setShowRedemption] = useState(false)
   const [isDownloading, setIsDownloading] = useState(false)
+  const [hasAccess, setHasAccess] = useState(false)
+  const [checking, setChecking] = useState(isCoded)
 
-  const getStatusIcon = () => {
-    if (isDownloading) {
-      return <div className="animate-spin"><Download size={20} /></div>
+  // Check access on mount for coded books
+  useEffect(() => {
+    const checkUserAccess = async () => {
+      if (isCoded && user?.id && book?.id) {
+        const access = await checkAccess(user.id, book.id)
+        setHasAccess(access)
+        setChecking(false)
+      }
     }
-    if (book.downloaded) {
-      return <CheckCircle size={20} className="text-green-500" />
-    }
-    if (book.sync_status === 'failed') {
-      return <AlertCircle size={20} className="text-red-500" />
-    }
-    return null
-  }
-
-  const getStorageInfo = () => {
-    if (book.downloaded) {
-      return `Saved • ${(book.file_size / 1024 / 1024).toFixed(1)}MB`
-    }
-    return `${(book.file_size / 1024 / 1024).toFixed(1)}MB`
-  }
+    checkUserAccess()
+  }, [isCoded, user, book, checkAccess])
 
   const handleDownload = async () => {
+    if (!isCoded) {
+      // Free book - grant access and download
+      if (user?.id && book?.id && !hasAccess) {
+        await grantAccess(user.id, book.id, 'FREE')
+        setHasAccess(true)
+      }
+      initiateDownload()
+      return
+    }
+
+    // Coded book - check access or show redemption
+    if (hasAccess) {
+      initiateDownload()
+    } else {
+      setShowRedemption(true)
+    }
+  }
+
+  const initiateDownload = async () => {
     setIsDownloading(true)
     try {
-      await onDownload(book.id)
+      if (book.pdf_url) {
+        console.log('Downloading from:', book.pdf_url)
+        
+        // Fetch the PDF file
+        const response = await fetch(book.pdf_url)
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`)
+        }
+        
+        const blob = await response.blob()
+        const blobUrl = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = blobUrl
+        
+        // Use the filename from the URL or create from title
+        let fileName = book.pdf_url.split('/').pop()
+        if (!fileName || fileName === '') {
+          fileName = `${book.title.replace(/[^a-z0-9]/gi, '_')}.pdf`
+        }
+        
+        link.download = fileName
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(blobUrl)
+        
+        console.log('Download started:', fileName)
+      } else {
+        alert('Download link not available')
+      }
+    } catch (err) {
+      console.error('Download error:', err)
+      alert('Failed to download book. Please try again.')
     } finally {
       setIsDownloading(false)
     }
   }
 
+  const handleRedemptionSuccess = () => {
+    setShowRedemption(false)
+    setHasAccess(true)
+    initiateDownload()
+  }
+
+  // Extract year from description or use placeholder
+  const year = book.year || new Date().getFullYear()
+
   return (
-    <div className="book-card border border-gray-200 rounded-lg p-4 bg-white hover:shadow-lg transition-shadow">
-      {/* Cover Image */}
-      <div className="relative mb-3">
-        <div className="w-full h-48 bg-gray-200 rounded overflow-hidden">
-          {book.cover_url ? (
-            <img
-              src={book.cover_url}
-              alt={book.title}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-blue-600 text-white text-sm text-center p-2">
-              No Cover
-            </div>
-          )}
-        </div>
-        <div className="absolute top-2 right-2 p-2 bg-white rounded-full shadow">
-          {getStatusIcon()}
-        </div>
-        <div className="absolute top-2 left-2">
-          {isOnline ? (
-            <Wifi size={16} className="text-blue-500" />
-          ) : (
-            <WifiOff size={16} className="text-gray-400" />
-          )}
-        </div>
+    <div className="group flex flex-col h-full">
+      {/* Book Cover Container */}
+      <div className="relative mb-6 overflow-hidden bg-gray-900 aspect-[9/12] border border-gray-800 group-hover:border-white transition duration-300">
+        {book.cover_url ? (
+          <img
+            src={book.cover_url}
+            alt={book.title}
+            className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center text-gray-500 font-serif">
+            <span className="text-center text-sm">No Cover Available</span>
+          </div>
+        )}
+
+        {/* Lock Badge for Premium Books */}
+        {isCoded && !hasAccess && (
+          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur text-yellow-400 p-2 rounded-full border border-yellow-400">
+            <Lock size={18} />
+          </div>
+        )}
+
+        {/* Premium Badge */}
+        {isCoded && hasAccess && (
+          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-serif tracking-widest uppercase border border-white">
+            Unlocked
+          </div>
+        )}
       </div>
 
-      {/* Content */}
-      <h3 className="font-bold text-sm truncate">{book.title}</h3>
-      <p className="text-xs text-gray-600 truncate">{book.author}</p>
+      {/* Book Metadata - Luxury Lookbook Style */}
+      <div className="flex-1 flex flex-col">
+        <h3 className="font-serif text-lg text-white mb-2 group-hover:text-yellow-400 transition duration-300 line-clamp-2">
+          {book.title}
+        </h3>
 
-      {/* Status Text */}
-      <p className="text-xs text-gray-500 mt-2">{getStorageInfo()}</p>
+        {/* Minimalist Author & Year Tag */}
+        <p className="text-xs text-gray-400 font-light tracking-widest uppercase mb-4">
+          BY {book.author || 'UNKNOWN AUTHOR'} | {year}
+        </p>
 
-      {/* Actions */}
-      <button
-        onClick={handleDownload}
-        disabled={isDownloading || !isOnline || book.downloaded}
-        className="mt-3 w-full py-2 bg-blue-500 text-white rounded text-sm font-medium disabled:bg-gray-300 transition-colors"
-      >
-        {book.downloaded ? 'Open' : isDownloading ? 'Downloading...' : 'Download'}
-      </button>
+        {/* Description */}
+        {book.description && (
+          <p className="text-xs text-gray-500 font-light leading-relaxed mb-4 line-clamp-2">
+            {book.description}
+          </p>
+        )}
 
-      {/* Retry Button */}
-      {book.sync_status === 'failed' && (
+        {/* File Size */}
+        {book.file_size_mb && (
+          <p className="text-xs text-gray-600 font-light mb-6">
+            {book.file_size_mb} MB
+          </p>
+        )}
+
+        {/* Redemption Form */}
+        {showRedemption && (
+          <div className="mb-6 p-4 border border-yellow-400 bg-black/50 rounded">
+            <RedemptionForm
+              bookId={book.id}
+              onSuccess={handleRedemptionSuccess}
+              onCancel={() => setShowRedemption(false)}
+            />
+          </div>
+        )}
+
+        {/* Download Button */}
         <button
-          className="mt-2 w-full py-2 bg-yellow-500 text-white rounded text-sm font-medium"
           onClick={handleDownload}
+          disabled={isDownloading || checking}
+          className="mt-auto w-full py-3 border border-white text-white hover:bg-white hover:text-black transition duration-300 font-serif font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Retry
+          <Download size={16} />
+          {isDownloading 
+            ? 'Downloading...' 
+            : isCoded 
+              ? (hasAccess ? 'Download' : checking ? 'Checking...' : 'Unlock') 
+              : 'Download'}
+          <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition duration-300" />
         </button>
-      )}
+      </div>
     </div>
   )
 }
