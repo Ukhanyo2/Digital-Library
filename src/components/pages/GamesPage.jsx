@@ -340,7 +340,27 @@ export const GamesPage = () => {
           ))}
         </div>
 
-        
+        {/* Disclaimer Section */}
+        <div className="mt-16 pt-8 border-t border-white/10">
+          <div className="bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-2xl">
+            <p className="text-yellow-400 text-sm font-semibold mb-2">⚠️ Disclaimer</p>
+            <p className="text-white/70 text-xs leading-relaxed">
+              This website provides gaming news, updates, reviews, and entertainment content from around the world for informational purposes only.
+              <br /><br />
+              We are not affiliated with, endorsed by, or officially connected to any game developers, publishers, gaming brands, or companies unless clearly stated. All trademarks, logos, images, and game titles belong to their respective owners.
+              <br /><br />
+              While we aim to keep information accurate and updated, we cannot guarantee complete accuracy at all times. Users should verify official announcements directly from the original sources.
+              <br /><br />
+              By using this website, you agree that the website owner is not responsible for any loss, damages, or decisions made based on the content provided here.
+            </p>
+          </div>
+        </div>
+
+        <div className="text-center mt-8 pt-4 border-t border-white/10">
+          <p className="text-white/40 text-xs">
+            PlayStation and PS5 are registered trademarks of Sony Interactive Entertainment.
+          </p>
+        </div>
       </div>
 
       {activeCategoryData && (
