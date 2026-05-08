@@ -11,6 +11,10 @@ export const LoginPage = () => {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [resetMode, setResetMode] = useState(false)
+  const [resetEmail, setResetEmail] = useState('')
+  const [resetMessage, setResetMessage] = useState('')
+  const [resetLoading, setResetLoading] = useState(false)
 
   const redirectPath = searchParams.get('redirect') || '/library'
 
@@ -46,9 +50,36 @@ export const LoginPage = () => {
     }
   }
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault()
+    setError('')
+    setResetMessage('')
+    setResetLoading(true)
+
+    try {
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      })
+
+      if (resetError) {
+        setError(resetError.message)
+      } else {
+        setResetMessage('Password reset email sent! Check your inbox.')
+        setTimeout(() => {
+          setResetMode(false)
+          setResetMessage('')
+          setResetEmail('')
+        }, 5000)
+      }
+    } catch (err) {
+      setError(err.message || 'An error occurred')
+    } finally {
+      setResetLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#2a6199' }}>
-      {/* Import fonts */}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -64,14 +95,12 @@ export const LoginPage = () => {
         }
       `}</style>
 
-      {/* Animated Background Elements  */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse delay-700"></div>
       </div>
 
-      {/* Background accent - Updated to blue/teal */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-teal-400 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-400 rounded-full blur-3xl"></div>
@@ -79,84 +108,170 @@ export const LoginPage = () => {
       </div>
 
       <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-12 w-full max-w-md shadow-2xl">
-        <h1 
-          className="font-serif text-4xl font-bold mb-2"
-          style={{ 
-            fontFamily: "'Playfair Display', serif",
-            background: 'linear-gradient(135deg, #fff 0%, #e0f2fe 50%, #fff 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 0 30px rgba(255,255,255,0.2)'
-          }}
-        >
-          Sign In
-        </h1>
-        <p className="text-white/60 mb-8 font-light tracking-wide" style={{ fontFamily: "'Inter', sans-serif" }}>
-          Access your premium collection
-        </p>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-xs font-light tracking-widest uppercase text-white/60 mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="you@example.com"
-              className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/30 transition duration-300 rounded-xl"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-light tracking-widest uppercase text-white/60 mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/30 transition duration-300 rounded-xl"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-              required
-            />
-          </div>
-
-          {error && (
-            <p className="text-red-300 text-sm bg-red-500/20 border border-red-400/30 p-4 rounded-xl font-light">
-              {error}
+        {!resetMode ? (
+          <>
+            <h1 
+              className="font-serif text-4xl font-bold mb-2"
+              style={{ 
+                fontFamily: "'Playfair Display', serif",
+                background: 'linear-gradient(135deg, #fff 0%, #e0f2fe 50%, #fff 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 0 30px rgba(255,255,255,0.2)'
+              }}
+            >
+              Sign In
+            </h1>
+            <p className="text-white/60 mb-8 font-light tracking-wide" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Access your premium collection
             </p>
-          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-4 bg-white text-[#2a6199] font-serif font-semibold text-lg 
-                     rounded-full hover:bg-teal-600 hover:text-white transition-all duration-300 
-                     transform hover:-translate-y-1 shadow-2xl hover:shadow-teal-500/30 
-                     disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none 
-                     tracking-wide uppercase"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-xs font-light tracking-widest uppercase text-white/60 mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/30 transition duration-300 rounded-xl"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  required
+                />
+              </div>
 
-        <p className="text-sm text-white/50 mt-8 text-center font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
-          Don't have an account?{' '}
-          <a
-            href={`/register?redirect=${encodeURIComponent(redirectPath)}`}
-            className="text-teal-300 hover:text-teal-200 font-semibold transition duration-300"
-          >
-            Register
-          </a>
-        </p>
+              <div>
+                <label className="block text-xs font-light tracking-widest uppercase text-white/60 mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/30 transition duration-300 rounded-xl"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  required
+                />
+              </div>
+
+              <div className="text-right">
+                <button
+                  type="button"
+                  onClick={() => setResetMode(true)}
+                  className="text-sm text-teal-300 hover:text-teal-200 transition duration-300 font-light"
+                >
+                  Forgot Password?
+                </button>
+              </div>
+
+              {error && (
+                <p className="text-red-300 text-sm bg-red-500/20 border border-red-400/30 p-4 rounded-xl font-light">
+                  {error}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-4 bg-white text-[#2a6199] font-serif font-semibold text-lg 
+                         rounded-full hover:bg-teal-600 hover:text-white transition-all duration-300 
+                         transform hover:-translate-y-1 shadow-2xl hover:shadow-teal-500/30 
+                         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none 
+                         tracking-wide uppercase"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                {loading ? 'Signing in...' : 'Sign In'}
+              </button>
+            </form>
+
+            <p className="text-sm text-white/50 mt-8 text-center font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Don't have an account?{' '}
+              <a
+                href={`/register?redirect=${encodeURIComponent(redirectPath)}`}
+                className="text-teal-300 hover:text-teal-200 font-semibold transition duration-300"
+              >
+                Register
+              </a>
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 
+              className="font-serif text-4xl font-bold mb-2"
+              style={{ 
+                fontFamily: "'Playfair Display', serif",
+                background: 'linear-gradient(135deg, #fff 0%, #e0f2fe 50%, #fff 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 0 30px rgba(255,255,255,0.2)'
+              }}
+            >
+              Reset Password
+            </h1>
+            <p className="text-white/60 mb-8 font-light tracking-wide" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Enter your email to receive a reset link
+            </p>
+
+            <form onSubmit={handleForgotPassword} className="space-y-6">
+              <div>
+                <label className="block text-xs font-light tracking-widest uppercase text-white/60 mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/30 transition duration-300 rounded-xl"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  required
+                />
+              </div>
+
+              {error && (
+                <p className="text-red-300 text-sm bg-red-500/20 border border-red-400/30 p-4 rounded-xl font-light">
+                  {error}
+                </p>
+              )}
+
+              {resetMessage && (
+                <p className="text-teal-300 text-sm bg-teal-500/20 border border-teal-400/30 p-4 rounded-xl font-light">
+                  {resetMessage}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={resetLoading}
+                className="w-full py-4 bg-white text-[#2a6199] font-serif font-semibold text-lg 
+                         rounded-full hover:bg-teal-600 hover:text-white transition-all duration-300 
+                         transform hover:-translate-y-1 shadow-2xl hover:shadow-teal-500/30 
+                         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none 
+                         tracking-wide uppercase"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                {resetLoading ? 'Sending...' : 'Send Reset Link'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setResetMode(false)
+                  setError('')
+                  setResetMessage('')
+                }}
+                className="w-full text-center text-sm text-white/50 hover:text-teal-300 transition duration-300 font-light mt-4"
+              >
+                ← Back to Sign In
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </div>
   )
