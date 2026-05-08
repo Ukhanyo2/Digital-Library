@@ -20,6 +20,10 @@ import { Events } from '@/components/pages/EventsPage'
 import CookieBanner from '@/components/CookiesBanner'
 import { initGA } from '@/lib/analytics'
 import usePageTracking from '@/hooks/usePageTracking'
+import { ResetPasswordPage } from '@/components/pages/ResetPasswordPage'
+import { PrivacyPage } from '@/components/pages/PrivacyPage'
+import { TermsPage } from '@/components/pages/TermsPage'
+import { TermsModal } from '@/components/pages/TermsModal'
 
 function AppRoutes() {
   return (
@@ -30,7 +34,11 @@ function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/about" element={<AboutUsPage />} />
       <Route path="/profile" element={<ProfilePage />} />
-      
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/terms-modal" element={<TermsModal />} />
+
       {/* Card navigation routes */}
       <Route path="/games" element={<GamesPage />} />
       <Route path="/games/:id" element={<div className="p-6 min-h-screen bg-gray-900 text-white"><h1 className="text-2xl">Game Details Coming Soon</h1></div>} />
