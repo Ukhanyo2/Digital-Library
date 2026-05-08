@@ -356,11 +356,7 @@ export const GamesPage = () => {
           </div>
         </div>
 
-        <div className="text-center mt-8 pt-4 border-t border-white/10">
-          <p className="text-white/40 text-xs">
-            PlayStation and PS5 are registered trademarks of Sony Interactive Entertainment.
-          </p>
-        </div>
+        
       </div>
 
       {activeCategoryData && (
