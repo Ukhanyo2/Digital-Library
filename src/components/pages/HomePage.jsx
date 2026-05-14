@@ -1,4 +1,7 @@
+import { useAuth } from '@/hooks/useAuth'
+
 export const HomePage = () => {
+  const { user } = useAuth()
   
   const featuredBooks = [
     {
@@ -35,7 +38,7 @@ export const HomePage = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       {/* Hero Section with Background Image */}
       <div 
-        className="relative w-full h-screen bg-cover bg-center flex items-center justify-center overflow-hidden hero-section"
+        className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-center overflow-hidden hero-section pt-24 sm:pt-32 md:pt-40 lg:pt-48 xl:pt-56"
         style={{
           backgroundImage: 'url("/images/hero-lifestyle.jpg")',
           backgroundAttachment: 'fixed'
@@ -71,6 +74,9 @@ export const HomePage = () => {
       {/* Premium Book Grid Section */}
       <div className="py-12 sm:py-24 px-4 sm:px-6" style={{ backgroundColor: '#1e4a7a' }}>
         <div className="max-w-7xl mx-auto">
+          <p className="text-center text-gray-400 mb-4 sm:mb-6 text-xs sm:text-sm font-light tracking-widest uppercase">
+            COLLECTION SIZE: {featuredBooks.length} TITLES
+          </p>
           <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-center mb-3 sm:mb-4 text-white">
             Featured Collection
           </h2>
@@ -90,11 +96,12 @@ export const HomePage = () => {
               >
 
                 {/* Book Cover */}
-                <div className="relative mb-6 overflow-hidden bg-gray-900 aspect-[9/12]">
+                <div className="relative mb-6 overflow-hidden bg-gray-800 aspect-[9/12] rounded-sm">
                   <img
                     src={book.cover}
                     alt={book.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                    onError={(e) => { e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"%3E%3Crect fill="%23374151" width="300" height="400"/%3E%3Ctext x="50" y="200" font-size="16" fill="%239CA3AF" font-family="Arial"%3EBook Cover%3C/text%3E%3C/svg%3E'; }}
                   />
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300"></div>
@@ -115,33 +122,35 @@ export const HomePage = () => {
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div className="relative py-12 sm:py-20 px-4 sm:px-6 border-t" style={{ backgroundColor: '#1e4a7a', borderColor: '#2a6199' }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl text-white mb-4 sm:mb-6">
-            Ready to Start Your Journey?
-          </h2>
-          <p className="text-sm sm:text-lg text-gray-300 mb-6 sm:mb-10 font-light leading-relaxed">
-            Join thousands of book enthusiasts exploring our premium collection
-          </p>
+      {/* CTA Section - Hidden if user is logged in */}
+      {!user && (
+        <div className="relative py-12 sm:py-20 px-4 sm:px-6 border-t" style={{ backgroundColor: '#1e4a7a', borderColor: '#2a6199' }}>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl text-white mb-4 sm:mb-6">
+              Ready to Start Your Journey?
+            </h2>
+            <p className="text-sm sm:text-lg text-gray-300 mb-6 sm:mb-10 font-light leading-relaxed">
+              Join thousands of book enthusiasts exploring our premium collection
+            </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6 items-center">
-            <a
-              href="/register"
-              className="w-full sm:w-auto px-8 sm:px-12 py-3 sm:py-4 bg-white text-black font-serif font-semibold text-sm sm:text-lg hover:bg-gray-200 transition duration-300 tracking-wide text-center"
-            >
-              CREATE ACCOUNT
-            </a>
-            <a
-              href="/login"
-              className="w-full sm:w-auto px-8 sm:px-12 py-3 sm:py-4 border-2 border-white text-white font-serif text-sm sm:text-lg hover:bg-white hover:text-black transition duration-300 tracking-wide text-center"
-            >
-              SIGN IN
-            </a>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6 items-center">
+              <a
+                href="/register"
+                className="w-full sm:w-auto px-8 sm:px-12 py-3 sm:py-4 bg-white text-black font-serif font-semibold text-sm sm:text-lg hover:bg-gray-200 transition duration-300 tracking-wide text-center"
+              >
+                CREATE ACCOUNT
+              </a>
+              <a
+                href="/login"
+                className="w-full sm:w-auto px-8 sm:px-12 py-3 sm:py-4 border-2 border-white text-white font-serif text-sm sm:text-lg hover:bg-white hover:text-black transition duration-300 tracking-wide text-center"
+              >
+                SIGN IN
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
