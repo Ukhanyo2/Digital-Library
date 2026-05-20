@@ -23,8 +23,8 @@ export const TopNav = () => {
       {/* Main Navigation with Collapsible Components */}
       <nav className="sticky top-0 z-50 border-b" style={{ backgroundColor: '#1e4a7a', borderColor: '#2a6199' }}>
         {/* Announcement Banner - Collapses on idle */}
-        <div className="announcement-banner border-b py-2 px-4 text-center hidden sm:block" style={{ backgroundColor: '#1e4a7a', borderColor: '#2a6199' }}>
-          <p className="text-xs md:text-sm text-white/80 tracking-widest uppercase font-light">
+        <div className="announcement-banner border-b py-1 px-4 text-center hidden sm:block" style={{ backgroundColor: '#1e4a7a', borderColor: '#2a6199' }}>
+          <p className="text-xs text-white/80 tracking-widest uppercase font-light">
             Digital Library | Premium Collection | Worldwide Access
           </p>
         </div>
@@ -32,7 +32,7 @@ export const TopNav = () => {
         {/* Navigation Content */}
         <div className="nav-content">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16 sm:h-20">
+            <div className="flex justify-between items-center h-14 sm:h-16">
               {/* Logo/Brand */}
               <div className="flex-shrink-0">
                 <a href="/" className="text-xl sm:text-2xl font-serif font-bold text-white hover:text-teal-300 transition duration-300">

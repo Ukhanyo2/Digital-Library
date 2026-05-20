@@ -38,7 +38,7 @@ export const HomePage = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       {/* Hero Section with Background Image */}
       <div 
-        className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-center overflow-hidden hero-section pt-24 sm:pt-32 md:pt-40 lg:pt-48 xl:pt-56"
+        className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-center overflow-hidden hero-section"
         style={{
           backgroundImage: 'url("/images/hero-lifestyle.jpg")',
           backgroundAttachment: 'fixed'
