@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MapPin, Phone, Mail, Send } from 'lucide-react'
+import emailjs from '@emailjs/browser'
 
 export const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,13 @@ export const ContactPage = () => {
   })
 
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    // Initialize EmailJS with your public key
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '')
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -17,17 +25,43 @@ export const ContactPage = () => {
       ...prev,
       [name]: value
     }))
+    setError(false)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Here you would typically send the form to your backend
-    console.log('Form submitted:', formData)
-    setSubmitted(true)
-    setFormData({ name: '', email: '', subject: '', message: '' })
+    setLoading(true)
+    setError(false)
     
-    // Reset success message after 3 seconds
-    setTimeout(() => setSubmitted(false), 3000)
+    const templateParams = {
+      to_email: 'mzwamadoda2@gmail.com',
+      from_name: formData.name,
+      from_email: formData.email,
+      subject: formData.subject,
+      message: formData.message
+    }
+
+    emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID || '',
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '',
+      templateParams
+    )
+    .then(() => {
+      setSubmitted(true)
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      setLoading(false)
+      
+      // Reset success message after 3 seconds
+      setTimeout(() => setSubmitted(false), 3000)
+    })
+    .catch((err) => {
+      console.error('Email send error:', err)
+      setError(true)
+      setLoading(false)
+      
+      // Reset error message after 3 seconds
+      setTimeout(() => setError(false), 3000)
+    })
   }
 
   return (
@@ -134,6 +168,12 @@ export const ContactPage = () => {
                 </div>
               )}
 
+              {error && (
+                <div className="mb-6 p-4 bg-red-500/20 border border-red-400 rounded-lg">
+                  <p className="text-red-300 font-light">Failed to send message. Please check your email and try again.</p>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div>
@@ -210,13 +250,14 @@ export const ContactPage = () => {
                
                 <button
                   type="submit"
+                  disabled={loading}
                   className="w-full px-8 py-4 bg-white text-[#2a6199] font-serif font-bold tracking-widest uppercase 
                            hover:bg-teal-600 hover:text-white transition-all duration-300 
                            transform hover:-translate-y-1 shadow-2xl hover:shadow-teal-500/30 
-                           rounded-full flex items-center justify-center gap-3 mt-8 text-lg"
+                           rounded-full flex items-center justify-center gap-3 mt-8 text-lg disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   <Send size={18} />
-                  Send Message
+                  {loading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
 

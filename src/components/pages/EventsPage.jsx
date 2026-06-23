@@ -163,12 +163,6 @@ export function Events() {
             <a href={event.link} target="_blank" rel="noopener noreferrer" key={event.id}>
               <Card className="hover:shadow-xl transition-shadow flex flex-col h-full cursor-pointer hover:border-teal-400 hover:border-2 bg-white/5 backdrop-blur-sm border-white/10">
                 <CardHeader className="pb-3">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-40 sm:h-48 object-cover rounded-md mb-4 hover:opacity-80 transition-opacity"
-                    onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/300x200?text=No+Image'; }}
-                  />
                   <div className="flex items-center justify-between mb-2">
                     <Badge className="text-white" style={{ backgroundColor: '#1e4a7a' }}>
                       {event.category}
@@ -211,6 +205,22 @@ export function Events() {
               </Card>
             </a>
           ))}
+        </div>
+
+        {/* Disclaimer Section */}
+        <div className="mt-16 pt-8 border-t border-white/10 mb-12">
+          <div className="bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-2xl">
+            <p className="text-yellow-400 text-sm font-semibold mb-2">⚠️ Disclaimer</p>
+            <p className="text-white/70 text-xs leading-relaxed">
+              This website provides event information, updates, and announcements from around the world for informational purposes only.
+              <br /><br />
+              We are not affiliated with, endorsed by, or officially connected to any event organizers, venues, brands, or companies unless clearly stated. All trademarks, logos, images, and event titles belong to their respective owners.
+              <br /><br />
+              While we aim to keep information accurate and updated, we cannot guarantee complete accuracy at all times. Users should verify official event details directly from the original sources.
+              <br /><br />
+              By using this website, you agree that the website owner is not responsible for any loss, damages, or decisions made based on the content provided here.
+            </p>
+          </div>
         </div>
 
         {/* Newsletter Signup */}
